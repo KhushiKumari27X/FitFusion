@@ -25,14 +25,3 @@ Live Demo: https://fit-fusion-khmz.vercel.app
 
 ---
 
-##  Screenshots
-
-
-
----
-
-##  Run Locally
-
-```bash
-npm install
-npm start
