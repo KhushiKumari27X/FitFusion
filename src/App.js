@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Box } from '@mui/material';
+import Favorites from './pages/Favorites';
 
 import './App.css';
 import ExerciseDetails from './pages/ExerciseDetails';
@@ -15,6 +16,7 @@ const App = () => (
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/exercise/:id" element={<ExerciseDetails />} />
+        <Route path="/favorites" element={<Favorites />} />
       </Routes>
       <Footer />
     </Box>

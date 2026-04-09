@@ -1,3 +1,73 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body (GLOBAL STYLE) */
 body {
-    background-color: #050A30;
+  font-family: 'Poppins', sans-serif;
+
+  /* 🔥 Modern gradient background */
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+
+  color: #ffffff;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Buttons (global style) */
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: #ff5722;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #ff784e;
+  transform: scale(1.05);
+}
+
+/* Scrollbar styling (optional but cool) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1c1c1c;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ff5722;
+  border-radius: 10px;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5 {
+  font-weight: 600;
+}
+
+/* Utility classes */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
 }

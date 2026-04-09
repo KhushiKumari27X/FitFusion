@@ -1,25 +1,91 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Stack } from '@mui/material';
+import { Link, useLocation } from 'react-router-dom';
+import { Stack, Typography } from '@mui/material';
 
 import Logo from '../assets/images/Logo.png';
 
-const Navbar = () => (
-  <Stack direction="row" justifyContent="space-around" sx={{ gap: { sm: '123px', xs: '40px' }, mt: { sm: '32px', xs: '20px' }, justifyContent: 'none' }} px="20px">
-    <Link to="/">
-      <img src={Logo} alt="logo" style={{ width: '48px', height: '48px', margin: '0px 20px' }} />
-    </Link>
+const Navbar = () => {
+  const location = useLocation();
+
+  const linkStyle = (path) => ({
+    textDecoration: 'none',
+    color: location.pathname === path ? '#ff9800' : '#fff',
+    fontWeight: location.pathname === path ? 'bold' : 'normal',
+    transition: '0.3s',
+  });
+
+  return (
     <Stack
       direction="row"
-      gap="40px"
-      fontFamily="Alegreya"
-      fontSize="24px"
-      alignItems="flex-end"
+      alignItems="center"
+      justifyContent="space-between"
+      flexWrap="wrap"
+      sx={{
+        px: { xs: '20px', md: '40px' },
+        py: '15px',
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+
+        //  FIXED PROFESSIONAL LOOK
+        backdropFilter: 'blur(6px)',   // reduced blur
+        background: 'rgba(15, 32, 39, 0.85)', // darker solid feel
+        borderBottom: '1px solid rgba(255,255,255,0.08)',
+      }}
     >
-      <Link to="/" style={{ textDecoration: 'none', color: '#fff', borderBottom: '3px solid #FF2625' }}>Home</Link>
-      <a href="#exercises" style={{ textDecoration: 'none', color: '#fff' }}>Exercises</a>
+      {/* Logo + Brand */}
+      <Stack direction="row" alignItems="center" gap="10px">
+        <img
+          src={Logo}
+          alt="logo"
+          style={{ width: '40px', height: '40px' }}
+        />
+        <Typography
+          fontSize={{ xs: '16px', md: '20px' }}
+          fontWeight="bold"
+          sx={{ color: '#fff' }}
+        >
+          FitTrack Pro
+        </Typography>
+      </Stack>
+
+      {/* Navigation Links */}
+      <Stack
+        direction="row"
+        gap={{ xs: '20px', md: '40px' }}
+        fontSize={{ xs: '14px', md: '18px' }}
+        alignItems="center"
+        mt={{ xs: '10px', md: '0px' }}
+      >
+        <Link to="/" style={linkStyle('/')}>
+          Home
+        </Link>
+
+        <a
+          href="#exercises"
+          style={{
+            ...linkStyle('/exercises'),
+          }}
+          onMouseEnter={(e) => (e.target.style.color = '#ff9800')}
+          onMouseLeave={(e) => (e.target.style.color = '#fff')}
+        >
+          Exercises
+        </a>
+
+        <Link
+          to="/favorites"
+          style={linkStyle('/favorites')}
+          onMouseEnter={(e) => (e.target.style.color = '#ff9800')}
+          onMouseLeave={(e) =>
+            (e.target.style.color =
+              location.pathname === '/favorites' ? '#ff9800' : '#fff')
+          }
+        >
+          Favorites
+        </Link>
+      </Stack>
     </Stack>
-  </Stack>
-);
+  );
+};
 
 export default Navbar;

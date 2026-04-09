@@ -19,24 +19,33 @@ const HeroBanner = () => {
   }, [images.length]);
 
   return (
-    <Box sx={{ mt: { lg: '212px', xs: '70px' }, ml: { sm: '50px' } }} position="relative" p="20px">
+    // <Box sx={{ mt: { lg: '212px', xs: '70px' }, ml: { sm: '50px' } }} position="relative" p="20px">
+    // {<Box sx={{ mt: { lg: '200px', xs: '10px' }, ml: { sm: '50px' } }} position="relative" p="20px"> 
+    <Box 
+  sx={{ 
+    mt: { lg: '155px', xs: '60px' },   // FIXED
+    ml: { sm: '50px' } 
+  }} 
+  position="relative" 
+  p="20px"
+>
       <Typography color="#FF2625" 
       fontWeight="600"
-       fontSize="26px"
-       sx={{ mt:"10px"}}>
+       fontSize="36px"
+       sx={{ mt:"5px"}}>
         Fitness Club
         </Typography>
       <Typography 
       color="#fff"
       fontWeight={700}
-       sx={{ fontSize: { lg: '44px', xs: '40px' } }} 
-       mb="23px" mt="30px">
+       sx={{ fontSize: { lg: '60px', xs: '40px' } }} 
+       mb="23px" mt="10px">
         Sweat, Smile <br />
         And Repeat
       </Typography>
       <Typography
       color="#fff"
-       fontSize="22px"
+       fontSize="25px"
         fontFamily="Alegreya" 
         lineHeight="35px">
         Check out the most effective exercises personalized to you

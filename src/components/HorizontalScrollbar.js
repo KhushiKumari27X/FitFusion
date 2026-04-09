@@ -11,8 +11,12 @@ const LeftArrow = () => {
   const { scrollPrev } = useContext(VisibilityContext);
 
   return (
-    <Typography onClick={() => scrollPrev()} className="right-arrow">
-      <img src={LeftArrowIcon} alt="right-arrow" />
+    <Typography
+      onClick={() => scrollPrev()}
+      className="right-arrow"
+      sx={{ cursor: 'pointer' }} // ✅ better UX
+    >
+      <img src={LeftArrowIcon} alt="left-arrow" />
     </Typography>
   );
 };
@@ -21,27 +25,43 @@ const RightArrow = () => {
   const { scrollNext } = useContext(VisibilityContext);
 
   return (
-    <Typography onClick={() => scrollNext()} className="left-arrow">
+    <Typography
+      onClick={() => scrollNext()}
+      className="left-arrow"
+      sx={{ cursor: 'pointer' }} // ✅ better UX
+    >
       <img src={RightArrowIcon} alt="right-arrow" />
     </Typography>
   );
 };
 
 const HorizontalScrollbar = ({ data, bodyParts, setBodyPart, bodyPart }) => (
-  <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-    {data.map((item) => (
-      <Box
-        key={item.ID || item}
-        itemId={item.ID || item}
-        title={item.ID || item}
-        m="0 40px"
-        
-      >
-        {bodyParts ? <BodyPart item={item} setBodyPart={setBodyPart} 
-        bodyPart={bodyPart} /> : <ExerciseCard exercise={item} /> }
-      </Box>
-    ))}
-  </ScrollMenu>
+  
+  // ✅ wrapper added (fix overflow + mobile scroll)
+  <div style={{ width: '100%', overflowX: 'auto' }}>
+    
+    <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
+      {data.map((item) => (
+        <Box
+          key={item.id || item} // ✅ fixed (ID → id)
+          itemID={item.id || item}
+          title={item.id || item}
+          m={{ xs: '0 10px', sm: '0 20px', md: '0 40px' }} // ✅ responsive spacing
+        >
+          {bodyParts ? (
+            <BodyPart
+              item={item}
+              setBodyPart={setBodyPart}
+              bodyPart={bodyPart}
+            />
+          ) : (
+            <ExerciseCard exercise={item} />
+          )}
+        </Box>
+      ))}
+    </ScrollMenu>
+
+  </div>
 );
 
 export default HorizontalScrollbar;
