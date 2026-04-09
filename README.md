@@ -36,14 +36,8 @@ FitFusion is a modern **React-based fitness web application** that helps users e
 ![Exercises](./screenshots/body1.png)
 ![](./screenshots/body2.png)
 ![](./screenshots/body3.png)
-###  Favorites
+###  Footer Page
 ![Footer](./screenshots/footer.png)
 
 
 ---
-
-##  Installation & Setup
-
-1. Clone the repository:
-```bash
-git clone https://github.com/KhushiKumari27X/FitFusion.git
