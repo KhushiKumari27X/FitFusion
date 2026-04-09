@@ -45,7 +45,7 @@ const Navbar = () => {
           fontWeight="bold"
           sx={{ color: '#fff' }}
         >
-          FitTrack Pro
+          FitFusion
         </Typography>
       </Stack>
 

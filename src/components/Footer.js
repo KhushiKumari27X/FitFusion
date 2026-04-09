@@ -32,7 +32,7 @@ const Footer = () => {
               letterSpacing: '1px',
             }}
           >
-            FitTrack Pro
+            FitFusion
           </Typography>
         </Stack>
 
@@ -80,7 +80,7 @@ const Footer = () => {
         mt="20px"
         fontSize="14px"
       >
-        © {new Date().getFullYear()} FitTrack Pro. All rights reserved.
+        © {new Date().getFullYear()} FitFusion. All rights reserved.
       </Typography>
     </Box>
   );
