@@ -3,6 +3,7 @@
 A modern fitness web application built with React that helps users explore exercises, watch tutorial videos, and manage their favorite workouts.
 
 ---
+Live Demo: https://fit-fusion-khmz.vercel.app
 
 ##  Features
 
