@@ -9,6 +9,10 @@ const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // 🔹 Helper to normalize ID
+  const getId = (item) => String(item?.id || item?._id || item?.idExercise || "");
+
+  // 🔥 Load favorites from backend
   const loadFavorites = async () => {
     try {
       setLoading(true);
@@ -17,8 +21,8 @@ const Favorites = () => {
 
       console.log("FAVORITES RESPONSE:", res.data);
 
-      //  always array
-      setFavorites(res.data || []);
+      // Always ensure array
+      setFavorites(Array.isArray(res.data) ? res.data : []);
 
     } catch (err) {
       console.error(err);
@@ -32,10 +36,10 @@ const Favorites = () => {
     loadFavorites();
   }, []);
 
-  //  handle both id and _id safely
+  // ❌ Remove locally (instant UI update)
   const handleRemoveLocal = (id) => {
     setFavorites(prev =>
-      prev.filter(f => (f.id || f._id) !== id)
+      prev.filter(item => getId(item) !== id)
     );
   };
 
@@ -70,13 +74,18 @@ const Favorites = () => {
           gap="30px"
           justifyContent="center"
         >
-          {favorites.map((exercise) => (
-            <ExerciseCard
-              key={exercise.id || exercise._id}   //  FIX
-              exercise={exercise}
-              onRemoveLocal={handleRemoveLocal}
-            />
-          ))}
+          {favorites.map((exercise) => {
+            const id = getId(exercise);
+
+            return (
+              <ExerciseCard
+                key={id}
+                exercise={exercise}
+                isFavorite={true} // ✅ always true on favorites page
+                onRemoveLocal={handleRemoveLocal}
+              />
+            );
+          })}
         </Stack>
       )}
 
