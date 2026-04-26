@@ -68,7 +68,7 @@ const Navbar = () => {
           Favorites
         </Link>
 
-        {/* 🔥 AUTH SECTION */}
+        {/*  AUTH SECTION */}
         {!user ? (
           <>
             <Link to="/login" style={{ color: '#fff' }}>Login</Link>

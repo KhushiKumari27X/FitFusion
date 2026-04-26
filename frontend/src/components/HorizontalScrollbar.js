@@ -14,7 +14,7 @@ const LeftArrow = () => {
     <Typography
       onClick={() => scrollPrev()}
       className="right-arrow"
-      sx={{ cursor: 'pointer' }} // ✅ better UX
+      sx={{ cursor: 'pointer' }} //  better UX
     >
       <img src={LeftArrowIcon} alt="left-arrow" />
     </Typography>
@@ -28,7 +28,7 @@ const RightArrow = () => {
     <Typography
       onClick={() => scrollNext()}
       className="left-arrow"
-      sx={{ cursor: 'pointer' }} // ✅ better UX
+      sx={{ cursor: 'pointer' }} //  better UX
     >
       <img src={RightArrowIcon} alt="right-arrow" />
     </Typography>
@@ -37,16 +37,16 @@ const RightArrow = () => {
 
 const HorizontalScrollbar = ({ data, bodyParts, setBodyPart, bodyPart }) => (
   
-  // ✅ wrapper added (fix overflow + mobile scroll)
+  //  wrapper added (fix overflow + mobile scroll)
   <div style={{ width: '100%', overflowX: 'auto' }}>
     
     <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
       {data.map((item) => (
         <Box
-          key={item.id || item} // ✅ fixed (ID → id)
+          key={item.id || item} //  fixed (ID → id)
           itemID={item.id || item}
           title={item.id || item}
-          m={{ xs: '0 10px', sm: '0 20px', md: '0 40px' }} // ✅ responsive spacing
+          m={{ xs: '0 10px', sm: '0 20px', md: '0 40px' }} //  responsive spacing
         >
           {bodyParts ? (
             <BodyPart

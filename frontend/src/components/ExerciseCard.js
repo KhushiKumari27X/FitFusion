@@ -14,7 +14,7 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
 
   const [isFavorite, setIsFavorite] = useState(false);
 
-  //  LOAD FAVORITES ONLY ONCE
+  //  FIXED: proper dependency handling
   useEffect(() => {
     const loadFavorites = async () => {
       try {
@@ -22,16 +22,16 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
 
         const favIds = res.data.map(f => String(f.id));
 
-        if (favIds.includes(getId(exercise))) {
-          setIsFavorite(true);
-        }
-      } catch {}
+        setIsFavorite(favIds.includes(getId(exercise)));
+      } catch (err) {
+        console.log("Error loading favorites");
+      }
     };
 
-    loadFavorites();
-  }, []); //  IMPORTANT: remove [exercise]
-
-
+    if (exercise) {
+      loadFavorites();
+    }
+  }, [exercise]); //  REQUIRED for Vercel
 
   //  ADD FAVORITE
   const handleFavorite = async (e) => {
@@ -46,7 +46,7 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
       return;
     }
 
-    //  INSTANT UI UPDATE FIRST
+    // instant UI update
     setIsFavorite(true);
 
     try {
@@ -61,19 +61,16 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
       toast.success("Added to favorites");
 
     } catch (err) {
-      // if already exists → keep it true
       toast.error("Already in favorites");
     }
   };
 
-
-
-  // REMOVE FAVORITE
+  //  REMOVE FAVORITE
   const handleRemove = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    //  INSTANT UI UPDATE
+    // instant UI update
     setIsFavorite(false);
 
     try {
@@ -85,12 +82,10 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
         onRemoveLocal(getId(exercise));
       }
 
-    } catch {
+    } catch (err) {
       toast.error("Error removing");
     }
   };
-
-
 
   if (!exercise || !getId(exercise)) return null;
 
@@ -103,10 +98,13 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
         width: '300px',
       }}
     >
-      <Link to={`/exercise/${getId(exercise)}`} style={{ textDecoration: 'none' }}>
+      <Link
+        to={`/exercise/${getId(exercise)}`}
+        style={{ textDecoration: 'none' }}
+      >
         <img
           src={exercise?.gifUrl}
-          alt={exercise?.name}
+          alt={exercise?.name || "exercise"}
           style={{ width: '100%' }}
         />
 

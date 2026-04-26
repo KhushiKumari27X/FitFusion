@@ -23,7 +23,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
 
-// 🔒 Protected Route (FINAL VERSION)
+//  Protected Route (FINAL VERSION)
 const PrivateRoute = ({ children }) => {
   const user = JSON.parse(localStorage.getItem("user") || "null");
 
@@ -41,7 +41,7 @@ const AppContent = () => {
 
   return (
     <>
-      {/* 🔥 Toast System */}
+      {/*  Toast System */}
       <Toaster position="top-right" />
 
       <Box
@@ -56,7 +56,7 @@ const AppContent = () => {
           <Route path="/" element={<Home />} />
           <Route path="/exercise/:id" element={<ExerciseDetails />} />
 
-          {/* 🔒 Protected Route */}
+          {/*  Protected Route */}
           <Route
             path="/favorites"
             element={

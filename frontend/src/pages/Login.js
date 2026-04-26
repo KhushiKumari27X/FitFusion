@@ -77,7 +77,7 @@ const Login = () => {
             }}
           />
 
-          {/* 🔥 PASSWORD WITH ICON */}
+          {/*  PASSWORD WITH ICON */}
           <div style={{ position: "relative" }}>
             <input
               type={showPassword ? "text" : "password"}
