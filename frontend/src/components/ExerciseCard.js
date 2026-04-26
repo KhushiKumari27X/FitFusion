@@ -14,24 +14,26 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
 
   const [isFavorite, setIsFavorite] = useState(false);
 
-  //  CHECK FAVORITE ON LOAD
+  // ✅ LOAD FAVORITES ONLY ONCE
   useEffect(() => {
     const loadFavorites = async () => {
       try {
         const res = await API.get("/favorites");
 
-        const exists = res.data.some(
-          (f) => String(f.id) === getId(exercise)
-        );
+        const favIds = res.data.map(f => String(f.id));
 
-        setIsFavorite(exists);
+        if (favIds.includes(getId(exercise))) {
+          setIsFavorite(true);
+        }
       } catch {}
     };
 
     loadFavorites();
-  }, [exercise]);
+  }, []); // 🔥 IMPORTANT: remove [exercise]
 
-  // ADD FAVORITE
+
+
+  // ❤️ ADD FAVORITE
   const handleFavorite = async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -44,6 +46,9 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
       return;
     }
 
+    // 🔥 INSTANT UI UPDATE FIRST
+    setIsFavorite(true);
+
     try {
       await API.post("/favorites", {
         id: getId(exercise),
@@ -53,24 +58,27 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
         target: exercise?.target,
       });
 
-      setIsFavorite(true); //  instant UI update
       toast.success("Added to favorites");
 
     } catch (err) {
-      setIsFavorite(true); //  already exists → still mark as true
+      // if already exists → keep it true
       toast.error("Already in favorites");
     }
   };
+
+
 
   // ❌ REMOVE FAVORITE
   const handleRemove = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
+    // 🔥 INSTANT UI UPDATE
+    setIsFavorite(false);
+
     try {
       await API.delete(`/favorites/${getId(exercise)}`);
 
-      setIsFavorite(false); //  instant UI update
       toast.success("Removed from favorites");
 
       if (onRemoveLocal) {
@@ -81,6 +89,8 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
       toast.error("Error removing");
     }
   };
+
+
 
   if (!exercise || !getId(exercise)) return null;
 
