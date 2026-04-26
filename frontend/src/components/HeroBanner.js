@@ -6,21 +6,18 @@ import ImageOne from '../assets/images/freepik-export-20240506184916tBaZ.jpeg';
 import ImageTwo from '../assets/images/ImageTwo.jpeg';
 import ImageThree from '../assets/images/ImageThree.jpeg';
 
+const images = [ImageOne, ImageTwo, ImageThree]; // static (no state)
+
 const HeroBanner = () => {
-
-  //  no setImages (fix unused warning)
-  const images = [ImageOne, ImageTwo, ImageThree];
-
   const [index, setIndex] = useState(0);
 
-  //  clean interval
   useEffect(() => {
     const interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % images.length);
+      setIndex((prev) => (prev + 1) % images.length);
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []); //  no dependency needed
+  }, []); //  no dependency issue
 
   return (
     <Box
@@ -31,12 +28,7 @@ const HeroBanner = () => {
       position="relative"
       p="20px"
     >
-      <Typography
-        color="#FF2625"
-        fontWeight="600"
-        fontSize="36px"
-        sx={{ mt: "5px" }}
-      >
+      <Typography color="#FF2625" fontWeight="600" fontSize="36px">
         Fitness Club
       </Typography>
 
@@ -51,19 +43,13 @@ const HeroBanner = () => {
         And Repeat
       </Typography>
 
-      <Typography
-        color="#fff"
-        fontSize="25px"
-        fontFamily="Alegreya"
-        lineHeight="35px"
-      >
+      <Typography color="#fff" fontSize="25px" fontFamily="Alegreya">
         Check out the most effective exercises personalized to you
       </Typography>
 
       <Stack>
-        {/* better anchor */}
         <a
-          href="/#exercises"
+          href="#exercises"
           style={{
             marginTop: '45px',
             textDecoration: 'none',
@@ -90,13 +76,12 @@ const HeroBanner = () => {
           position: 'absolute',
           top: '60%',
           right: '10px',
-          transform: 'translateY(-50%) rotate(90deg)',
+          transform: 'translateY(-50%) rotate(90deg)'
         }}
       >
         Exercise
       </Typography>
 
-      {/*  rotating image */}
       <img
         src={images[index]}
         alt="exercise preview"
@@ -104,15 +89,13 @@ const HeroBanner = () => {
           position: 'absolute',
           top: '20px',
           right: '20px',
-          height: '300px',
-          width: 'auto'
+          height: '300px'
         }}
       />
 
-      {/*  hero image */}
       <img
         src={HeroBannerImage}
-        alt="fitness banner"
+        alt="hero banner"
         className="hero-banner-img"
       />
     </Box>
