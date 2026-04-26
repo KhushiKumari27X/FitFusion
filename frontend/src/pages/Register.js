@@ -112,7 +112,7 @@ const Register = () => {
                 cursor: "pointer"
               }}
             >
-              {showPassword ? "🙈" : "👁️"}
+              {showPassword ? "" : "👁️"}
             </span>
           </div>
 
