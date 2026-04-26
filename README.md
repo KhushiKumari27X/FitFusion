@@ -32,6 +32,23 @@ FitFusion is a full-stack fitness web application that allows users to explore e
 - Backend → Render  
 
 ---
+##  Screenshots
+
+###  Home Page
+![Home](screenshots/hero.png)
+###  Register
+![Register](screenshots/register.png)
+
+###  Exercise Page
+![Exercise](screenshots/body1.png)
+![Exercise](screenshots/body2.png)
+![Exercise](screenshots/body3.png)
+
+###  Favorites
+![Favorites](screenshots/favorite.png)
+
+###  About
+![About](screenshots/favorite.png)
 
 ##  Features
 
@@ -41,24 +58,6 @@ FitFusion is a full-stack fitness web application that allows users to explore e
 -  Protected Routes
 -  Fast & Responsive UI
 -  Full-stack Deployment
-
----
-
-##  Project Structure
-fitness-App/
-│
-├── frontend/ # React Application
-│ ├── src/
-│ ├── components/
-│ ├── pages/
-│ └── ...
-│
-├── backend/ # Node + Express API
-│ ├── routes/
-│ ├── models/
-│ ├── controllers/
-│ └── ...
-
 
 ---
 
@@ -79,12 +78,6 @@ fitness-App/
 - GET `/api/favorites`
 - POST `/api/favorites`
 - DELETE `/api/favorites/:id`
-
----
-
-##  Screenshots
-
-(Add your project screenshots here)
 
 ---
 
