@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api";
 import toast from "react-hot-toast";
+import {FaEye, FaEyeSlash} from "react-icons/fa";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -112,7 +113,7 @@ const Register = () => {
                 cursor: "pointer"
               }}
             >
-              {showPassword ? "" : "👁️"}
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
 
