@@ -1,14 +1,11 @@
 import axios from "axios";
 
-// ✅ DEBUG (important)
-console.log("API WORKING TEST");
-
 const API = axios.create({
   baseURL: "https://fitfusion-backend-f8j6.onrender.com/api",
   withCredentials: true,
 });
 
-// Attach token
+//  Attach token automatically
 API.interceptors.request.use(
   (req) => {
     const token = localStorage.getItem("token");
@@ -22,13 +19,17 @@ API.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Handle errors
+//  Handle errors cleanly
 API.interceptors.response.use(
   (res) => res,
   (error) => {
     if (error.response?.status === 401) {
-      console.error("Unauthorized - Token issue");
+      // optional: auto logout
+      localStorage.removeItem("token");
+
+      // silent (no console spam)
     }
+
     return Promise.reject(error);
   }
 );

@@ -14,9 +14,14 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
 
   const [isFavorite, setIsFavorite] = useState(false);
 
-  //  FIXED: proper dependency handling
+  // FIXED: only call API if token exists
   useEffect(() => {
     const loadFavorites = async () => {
+      const token = localStorage.getItem("token");
+
+      // ❗ prevent 401 error
+      if (!token) return;
+
       try {
         const res = await API.get("/favorites");
 
@@ -24,16 +29,16 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
 
         setIsFavorite(favIds.includes(getId(exercise)));
       } catch (err) {
-        console.log("Error loading favorites");
+        // silently ignore to avoid console spam
       }
     };
 
-    if (exercise) {
+    if (exercise && getId(exercise)) {
       loadFavorites();
     }
-  }, [exercise]); //  REQUIRED for Vercel
+  }, [exercise]);
 
-  //  ADD FAVORITE
+  // ADD FAVORITE
   const handleFavorite = async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -46,7 +51,6 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
       return;
     }
 
-    // instant UI update
     setIsFavorite(true);
 
     try {
@@ -59,7 +63,6 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
       });
 
       toast.success("Added to favorites");
-
     } catch (err) {
       toast.error("Already in favorites");
     }
@@ -70,7 +73,6 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
     e.preventDefault();
     e.stopPropagation();
 
-    // instant UI update
     setIsFavorite(false);
 
     try {
@@ -81,7 +83,6 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
       if (onRemoveLocal) {
         onRemoveLocal(getId(exercise));
       }
-
     } catch (err) {
       toast.error("Error removing");
     }
@@ -117,7 +118,7 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
 
       {isFavoritePage ? (
         <button onClick={handleRemove}>
-          ❌ Remove
+           Remove
         </button>
       ) : (
         <button onClick={handleFavorite}>
