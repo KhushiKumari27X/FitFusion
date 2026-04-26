@@ -81,15 +81,6 @@ FitFusion is a full-stack fitness web application that allows users to explore e
 
 ---
 
-##  Future Improvements
-
--  AI-based workout recommendations
--  Progress tracking dashboard
--  Better mobile responsiveness
--  User profile management
-
----
-
 ##  Author
 
 **Khushi Kumari**
