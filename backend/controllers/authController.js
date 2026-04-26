@@ -2,13 +2,18 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+//  Generate JWT Token
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "7d"
   });
 };
 
-// REGISTER
+
+
+// =====================
+//  REGISTER
+// =====================
 export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -32,22 +37,24 @@ export const register = async (req, res) => {
 
     const token = createToken(user._id);
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "strict"
-    });
-
     const { password: _, ...safeUser } = user.toObject();
 
-    res.json({ user: safeUser });
+    //  IMPORTANT: send token + user
+    res.status(201).json({
+      token,
+      user: safeUser
+    });
 
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
-// LOGIN
+
+
+// =====================
+//  LOGIN
+// =====================
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -68,23 +75,24 @@ export const login = async (req, res) => {
 
     const token = createToken(user._id);
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "strict"
-    });
-
     const { password: _, ...safeUser } = user.toObject();
 
-    res.json({ user: safeUser });
+    //  IMPORTANT: send token + user
+    res.json({
+      token,
+      user: safeUser
+    });
 
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
-// LOGOUT
+
+
+// =====================
+//  LOGOUT (optional)
+// =====================
 export const logout = (req, res) => {
-  res.cookie("token", "", { maxAge: 0 });
-  res.json({ message: "Logged out" });
+  res.json({ message: "Logged out successfully" });
 };

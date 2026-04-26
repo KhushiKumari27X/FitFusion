@@ -17,8 +17,8 @@ const Favorites = () => {
 
       console.log("FAVORITES RESPONSE:", res.data);
 
-      //  backend returns array directly
-      setFavorites(res.data);
+      //  always array
+      setFavorites(res.data || []);
 
     } catch (err) {
       console.error(err);
@@ -32,9 +32,11 @@ const Favorites = () => {
     loadFavorites();
   }, []);
 
-  //  FIX: use id (not _id)
+  //  handle both id and _id safely
   const handleRemoveLocal = (id) => {
-    setFavorites(prev => prev.filter(f => f.id !== id));
+    setFavorites(prev =>
+      prev.filter(f => (f.id || f._id) !== id)
+    );
   };
 
   if (loading) return <Loader />;
@@ -70,7 +72,7 @@ const Favorites = () => {
         >
           {favorites.map((exercise) => (
             <ExerciseCard
-              key={exercise.id}   // FIX
+              key={exercise.id || exercise._id}   //  FIX
               exercise={exercise}
               onRemoveLocal={handleRemoveLocal}
             />

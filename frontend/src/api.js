@@ -1,18 +1,33 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://fitfusion-backend-f8j6.onrender.com/api"
+  baseURL: "https://fitfusion-backend-f8j6.onrender.com/api",
+  withCredentials: true, // optional but good practice
 });
 
-// attach token
-API.interceptors.request.use((req) => {
-  const token = localStorage.getItem("token");
+//  Attach token to every request
+API.interceptors.request.use(
+  (req) => {
+    const token = localStorage.getItem("token");
 
-  if (token) {
-    req.headers.Authorization = `Bearer ${token}`;
+    if (token) {
+      req.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return req;
+  },
+  (error) => Promise.reject(error)
+);
+
+//  Handle global errors (VERY useful)
+API.interceptors.response.use(
+  (res) => res,
+  (error) => {
+    if (error.response?.status === 401) {
+      console.error("Unauthorized - Token issue");
+    }
+    return Promise.reject(error);
   }
-
-  return req;
-});
+);
 
 export default API;
