@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api";
 import toast from "react-hot-toast";
-import {FaEye, FaEyeSlash} from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -15,7 +15,6 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleRegister = async () => {
-    //  VALIDATIONS
     if (!name || !email || !password || !confirmPassword) {
       return toast.error("Please fill all fields");
     }
@@ -31,20 +30,16 @@ const Register = () => {
     try {
       setLoading(true);
 
-      const res = await API.post("/auth/register", {
+      await API.post("/auth/register", {
         name,
         email,
         password
       });
 
-      console.log("REGISTER RESPONSE:", res.data);
-
       toast.success("Registered successfully, please login");
       navigate("/login");
 
     } catch (err) {
-      console.error(err);
-
       toast.error(
         err.response?.data?.message || "Registration failed"
       );
@@ -69,12 +64,11 @@ const Register = () => {
       }}>
         <h2>Register</h2>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleRegister();
-          }}
-        >
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          handleRegister();
+        }}>
+
           <input
             placeholder="Name"
             value={name}
@@ -90,7 +84,7 @@ const Register = () => {
             style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
           />
 
-          {/* PASSWORD FIELD */}
+          {/*  PASSWORD */}
           <div style={{ position: "relative" }}>
             <input
               type={showPassword ? "text" : "password"}
@@ -105,26 +99,50 @@ const Register = () => {
             />
 
             <span
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={() => setShowPassword(prev => !prev)}
               style={{
                 position: "absolute",
                 right: "10px",
-                top: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
                 cursor: "pointer"
               }}
             >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
+              {showPassword
+                ? <FaEyeSlash size={18} color="#555" />
+                : <FaEye size={18} color="#555" />}
             </span>
           </div>
 
-          {/* CONFIRM PASSWORD */}
-          <input
-            type={showPassword ? "text" : "password"}
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            style={{ width: "100%", padding: "10px", marginBottom: "15px" }}
-          />
+          {/*  CONFIRM PASSWORD (same icon behavior) */}
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              style={{
+                width: "100%",
+                padding: "10px",
+                marginBottom: "15px"
+              }}
+            />
+
+            <span
+              onClick={() => setShowPassword(prev => !prev)}
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                cursor: "pointer"
+              }}
+            >
+              {showPassword
+                ? <FaEyeSlash size={18} color="#555" />
+                : <FaEye size={18} color="#555" />}
+            </span>
+          </div>
 
           <button
             type="submit"

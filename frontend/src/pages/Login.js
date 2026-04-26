@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api";
 import toast from "react-hot-toast";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -23,8 +25,6 @@ const Login = () => {
         password
       });
 
-      console.log("LOGIN RESPONSE:", res.data);
-
       if (!res.data?.token) {
         toast.error("Login failed: No token received");
         return;
@@ -37,7 +37,6 @@ const Login = () => {
       navigate("/");
 
     } catch (err) {
-      console.error(err);
       toast.error(
         err.response?.data?.message || "Login failed"
       );
@@ -47,32 +46,25 @@ const Login = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "80vh"
-      }}
-    >
-      <div
-        style={{
-          background: "#fff",
-          padding: "30px",
-          borderRadius: "10px",
-          width: "300px",
-          textAlign: "center"
-        }}
-      >
+    <div style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "80vh"
+    }}>
+      <div style={{
+        background: "#fff",
+        padding: "30px",
+        borderRadius: "10px",
+        width: "300px",
+        textAlign: "center"
+      }}>
         <h2>Login</h2>
 
-        {/* ✅ FIX STARTS HERE */}
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleLogin();
-          }}
-        >
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          handleLogin();
+        }}>
           <input
             type="email"
             placeholder="Email"
@@ -85,17 +77,35 @@ const Login = () => {
             }}
           />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{
-              width: "100%",
-              padding: "10px",
-              marginBottom: "15px"
-            }}
-          />
+          {/* 🔥 PASSWORD WITH ICON */}
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{
+                width: "100%",
+                padding: "10px",
+                marginBottom: "15px"
+              }}
+            />
+
+            <span
+              onClick={() => setShowPassword(prev => !prev)}
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                cursor: "pointer"
+              }}
+            >
+              {showPassword
+                ? <FaEyeSlash size={18} color="#555" />
+                : <FaEye size={18} color="#555" />}
+            </span>
+          </div>
 
           <button
             type="submit"
@@ -113,7 +123,6 @@ const Login = () => {
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
-        {/* ✅ FIX ENDS HERE */}
       </div>
     </div>
   );
