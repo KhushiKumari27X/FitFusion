@@ -48,7 +48,7 @@ FitFusion is a full-stack fitness web application that allows users to explore e
 ![Favorites](screenshots/favorite.png)
 
 ###  About
-![About](screenshots/favorite.png)
+![About](screenshots/about.png)
 
 ##  Features
 
