@@ -12,8 +12,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      toast.error("Please fill all fields");
-      return;
+      return toast.error("Please fill all fields");
     }
 
     try {
@@ -26,20 +25,21 @@ const Login = () => {
 
       console.log("LOGIN RESPONSE:", res.data);
 
-      //  SAFETY CHECK (important)
-      if (!res.data.token) {
-        toast.error("Token not received");
+      //  IMPORTANT: Backend MUST send token
+      if (!res.data?.token) {
+        toast.error("Login failed: No token received");
         return;
       }
 
-      //  STORE TOKEN (REQUIRED)
+      //  Store token
       localStorage.setItem("token", res.data.token);
 
-      //  STORE USER (optional)
+      //  Store user (optional)
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
       toast.success("Login successful");
 
+      //  redirect
       navigate("/");
 
     } catch (err) {
@@ -54,19 +54,23 @@ const Login = () => {
   };
 
   return (
-    <div style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "80vh"
-    }}>
-      <div style={{
-        background: "#fff",
-        padding: "30px",
-        borderRadius: "10px",
-        width: "300px",
-        textAlign: "center"
-      }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "80vh"
+      }}
+    >
+      <div
+        style={{
+          background: "#fff",
+          padding: "30px",
+          borderRadius: "10px",
+          width: "300px",
+          textAlign: "center"
+        }}
+      >
         <h2>Login</h2>
 
         <input
@@ -74,7 +78,11 @@ const Login = () => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "10px"
+          }}
         />
 
         <input
@@ -82,7 +90,11 @@ const Login = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{ width: "100%", padding: "10px", marginBottom: "15px" }}
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "15px"
+          }}
         />
 
         <button

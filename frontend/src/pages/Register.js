@@ -13,8 +13,7 @@ const Register = () => {
 
   const handleRegister = async () => {
     if (!name || !email || !password) {
-      toast.error("Please fill all fields");
-      return;
+      return toast.error("Please fill all fields");
     }
 
     try {
@@ -26,9 +25,9 @@ const Register = () => {
         password
       });
 
-      console.log("REGISTER RESPONSE:", res.data); //  debug
+      console.log("REGISTER RESPONSE:", res.data);
 
-      //  OPTION 1 (recommended): redirect to login
+      //  always redirect to login
       toast.success("Registered successfully, please login");
       navigate("/login");
 
@@ -44,23 +43,19 @@ const Register = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "80vh"
-      }}
-    >
-      <div
-        style={{
-          background: "#fff",
-          padding: "30px",
-          borderRadius: "10px",
-          width: "320px",
-          textAlign: "center"
-        }}
-      >
+    <div style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "80vh"
+    }}>
+      <div style={{
+        background: "#fff",
+        padding: "30px",
+        borderRadius: "10px",
+        width: "320px",
+        textAlign: "center"
+      }}>
         <h2>Register</h2>
 
         <input
