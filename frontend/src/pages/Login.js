@@ -24,49 +24,71 @@ const Login = () => {
         password
       });
 
-      // ✅ Store full response (user + token if exists)
-      localStorage.setItem("user", JSON.stringify(res.data));
+      console.log("LOGIN RESPONSE:", res.data); // 🔍 DEBUG (remove later)
+
+      // ✅ store token separately (IMPORTANT)
+      localStorage.setItem("token", res.data.token);
+
+      // ✅ store user data (optional but useful)
+      localStorage.setItem("user", JSON.stringify(res.data.user));
 
       toast.success("Login successful");
 
       navigate("/");
 
     } catch (err) {
-      toast.error(err.response?.data?.message || "Login failed");
+      console.error(err);
+
+      toast.error(
+        err.response?.data?.message || "Login failed"
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "80vh"
-    }}>
-      <div style={{
-        background: "#fff",
-        padding: "30px",
-        borderRadius: "10px",
-        width: "300px",
-        textAlign: "center"
-      }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "80vh"
+      }}
+    >
+      <div
+        style={{
+          background: "#fff",
+          padding: "30px",
+          borderRadius: "10px",
+          width: "300px",
+          textAlign: "center"
+        }}
+      >
         <h2>Login</h2>
 
         <input
+          type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "10px"
+          }}
         />
 
         <input
-          placeholder="Password"
           type="password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{ width: "100%", padding: "10px", marginBottom: "15px" }}
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "15px"
+          }}
         />
 
         <button

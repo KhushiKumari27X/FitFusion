@@ -3,19 +3,25 @@ import { Box, Typography, Stack } from '@mui/material';
 import ExerciseCard from '../components/ExerciseCard';
 import API from '../api';
 import toast from 'react-hot-toast';
-import Loader from '../components/Loader'; // 🔥 add this
+import Loader from '../components/Loader';
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 🔥 Fetch from backend
   const loadFavorites = async () => {
     try {
       setLoading(true);
+
       const res = await API.get('/favorites');
+
+      console.log("FAVORITES RESPONSE:", res.data);
+
+      //  backend returns array directly
       setFavorites(res.data);
+
     } catch (err) {
+      console.error(err);
       toast.error("Failed to load favorites");
     } finally {
       setLoading(false);
@@ -26,12 +32,11 @@ const Favorites = () => {
     loadFavorites();
   }, []);
 
-  // 🔥 Remove favorite (NO reload)
+  //  FIX: use id (not _id)
   const handleRemoveLocal = (id) => {
     setFavorites(prev => prev.filter(f => f.id !== id));
   };
 
-  // ⏳ REAL LOADER
   if (loading) return <Loader />;
 
   return (
@@ -47,7 +52,6 @@ const Favorites = () => {
         Your Favorite Exercises
       </Typography>
 
-      {/* 📭 EMPTY STATE (improved) */}
       {favorites.length === 0 ? (
         <Box textAlign="center" mt="60px">
           <Typography color="#ccc" fontSize="20px">
@@ -66,7 +70,7 @@ const Favorites = () => {
         >
           {favorites.map((exercise) => (
             <ExerciseCard
-              key={exercise.id}
+              key={exercise.id}   // FIX
               exercise={exercise}
               onRemoveLocal={handleRemoveLocal}
             />

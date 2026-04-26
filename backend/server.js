@@ -15,10 +15,6 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-// app.use(cors({
-//   origin: "http://localhost:3000",
-//   credentials: true
-// }));
 app.use(cors({
   origin: ["http://localhost:3000", "https://fit-fusion-khmz.vercel.app"],
   credentials: true

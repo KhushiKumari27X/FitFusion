@@ -20,38 +20,47 @@ const Register = () => {
     try {
       setLoading(true);
 
-      await API.post("/auth/register", {
+      const res = await API.post("/auth/register", {
         name,
         email,
         password
       });
 
-      toast.success("Registered successfully");
+      console.log("REGISTER RESPONSE:", res.data); //  debug
 
-      // ✅ redirect to login
+      //  OPTION 1 (recommended): redirect to login
+      toast.success("Registered successfully, please login");
       navigate("/login");
 
     } catch (err) {
-      toast.error(err.response?.data?.message || "Registration failed");
+      console.error(err);
+
+      toast.error(
+        err.response?.data?.message || "Registration failed"
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "80vh"
-    }}>
-      <div style={{
-        background: "#fff",
-        padding: "30px",
-        borderRadius: "10px",
-        width: "320px",
-        textAlign: "center"
-      }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "80vh"
+      }}
+    >
+      <div
+        style={{
+          background: "#fff",
+          padding: "30px",
+          borderRadius: "10px",
+          width: "320px",
+          textAlign: "center"
+        }}
+      >
         <h2>Register</h2>
 
         <input
@@ -62,6 +71,7 @@ const Register = () => {
         />
 
         <input
+          type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -69,8 +79,8 @@ const Register = () => {
         />
 
         <input
-          placeholder="Password"
           type="password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           style={{ width: "100%", padding: "10px", marginBottom: "15px" }}
