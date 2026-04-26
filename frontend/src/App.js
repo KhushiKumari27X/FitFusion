@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
   Route,
   Routes,
   useLocation,
@@ -22,14 +21,11 @@ import Register from './pages/Register';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
-
-//  Protected Route (FINAL VERSION)
+// Protected Route
 const PrivateRoute = ({ children }) => {
   const user = JSON.parse(localStorage.getItem("user") || "null");
-
   return user ? children : <Navigate to="/login" replace />;
 };
-
 
 // Layout Wrapper
 const AppContent = () => {
@@ -41,7 +37,6 @@ const AppContent = () => {
 
   return (
     <>
-      {/*  Toast System */}
       <Toaster position="top-right" />
 
       <Box
@@ -49,14 +44,12 @@ const AppContent = () => {
         sx={{ width: { xl: '1488px' } }}
         m="auto"
       >
-
         {!hideLayout && <Navbar />}
 
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/exercise/:id" element={<ExerciseDetails />} />
 
-          {/*  Protected Route */}
           <Route
             path="/favorites"
             element={
@@ -71,18 +64,12 @@ const AppContent = () => {
         </Routes>
 
         {!hideLayout && <Footer />}
-
       </Box>
     </>
   );
 };
 
-
-// Main App
-const App = () => (
-  <Router>
-    <AppContent />
-  </Router>
-);
+// 🚀 NO Router here
+const App = () => <AppContent />;
 
 export default App;
