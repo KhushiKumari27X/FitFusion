@@ -25,26 +25,19 @@ const Login = () => {
 
       console.log("LOGIN RESPONSE:", res.data);
 
-      //  IMPORTANT: Backend MUST send token
       if (!res.data?.token) {
         toast.error("Login failed: No token received");
         return;
       }
 
-      //  Store token
       localStorage.setItem("token", res.data.token);
-
-      //  Store user (optional)
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
       toast.success("Login successful");
-
-      //  redirect
       navigate("/");
 
     } catch (err) {
       console.error(err);
-
       toast.error(
         err.response?.data?.message || "Login failed"
       );
@@ -73,45 +66,54 @@ const Login = () => {
       >
         <h2>Login</h2>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "10px",
-            marginBottom: "10px"
-          }}
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "10px",
-            marginBottom: "15px"
-          }}
-        />
-
-        <button
-          onClick={handleLogin}
-          disabled={loading}
-          style={{
-            width: "100%",
-            padding: "10px",
-            background: "#ff5722",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer"
+        {/* ✅ FIX STARTS HERE */}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleLogin();
           }}
         >
-          {loading ? "Logging in..." : "Login"}
-        </button>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "10px",
+              marginBottom: "10px"
+            }}
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "10px",
+              marginBottom: "15px"
+            }}
+          />
+
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              width: "100%",
+              padding: "10px",
+              background: "#ff5722",
+              color: "#fff",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer"
+            }}
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+        {/* ✅ FIX ENDS HERE */}
       </div>
     </div>
   );

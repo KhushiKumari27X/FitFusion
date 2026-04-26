@@ -27,7 +27,6 @@ const Register = () => {
 
       console.log("REGISTER RESPONSE:", res.data);
 
-      //  always redirect to login
       toast.success("Registered successfully, please login");
       navigate("/login");
 
@@ -58,44 +57,54 @@ const Register = () => {
       }}>
         <h2>Register</h2>
 
-        <input
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
-        />
-
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{ width: "100%", padding: "10px", marginBottom: "15px" }}
-        />
-
-        <button
-          onClick={handleRegister}
-          disabled={loading}
-          style={{
-            width: "100%",
-            padding: "10px",
-            background: "#ff5722",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer"
+        {/*  FIX START */}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleRegister();
           }}
         >
-          {loading ? "Registering..." : "Register"}
-        </button>
+          <input
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
+          />
+
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{ width: "100%", padding: "10px", marginBottom: "15px" }}
+          />
+
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              width: "100%",
+              padding: "10px",
+              background: "#ff5722",
+              color: "#fff",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer"
+            }}
+          >
+            {loading ? "Registering..." : "Register"}
+          </button>
+        </form>
+        {/*  FIX END */}
+
       </div>
     </div>
   );
