@@ -14,7 +14,7 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
 
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // ✅ LOAD FAVORITES ONLY ONCE
+  //  LOAD FAVORITES ONLY ONCE
   useEffect(() => {
     const loadFavorites = async () => {
       try {
@@ -29,11 +29,11 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
     };
 
     loadFavorites();
-  }, []); // 🔥 IMPORTANT: remove [exercise]
+  }, []); //  IMPORTANT: remove [exercise]
 
 
 
-  // ❤️ ADD FAVORITE
+  //  ADD FAVORITE
   const handleFavorite = async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -46,7 +46,7 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
       return;
     }
 
-    // 🔥 INSTANT UI UPDATE FIRST
+    //  INSTANT UI UPDATE FIRST
     setIsFavorite(true);
 
     try {
@@ -68,12 +68,12 @@ const ExerciseCard = ({ exercise, onRemoveLocal }) => {
 
 
 
-  // ❌ REMOVE FAVORITE
+  // REMOVE FAVORITE
   const handleRemove = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    // 🔥 INSTANT UI UPDATE
+    //  INSTANT UI UPDATE
     setIsFavorite(false);
 
     try {
