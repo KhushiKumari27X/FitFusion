@@ -1,11 +1,14 @@
 import axios from "axios";
 
+// ✅ DEBUG (important)
+console.log("API WORKING TEST");
+
 const API = axios.create({
   baseURL: "https://fitfusion-backend-f8j6.onrender.com/api",
-  withCredentials: true, // optional but good practice
+  withCredentials: true,
 });
 
-//  Attach token to every request
+// Attach token
 API.interceptors.request.use(
   (req) => {
     const token = localStorage.getItem("token");
@@ -19,7 +22,7 @@ API.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-//  Handle global errors (VERY useful)
+// Handle errors
 API.interceptors.response.use(
   (res) => res,
   (error) => {
