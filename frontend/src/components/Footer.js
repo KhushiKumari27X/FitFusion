@@ -21,7 +21,7 @@ const Footer = () => {
         alignItems="center"
         spacing={4}
       >
-        {/* LOGO + BRAND */}
+        {/* LOGO */}
         <Stack direction="row" alignItems="center" gap="10px">
           <img src={Logo} alt="logo" style={{ width: '45px' }} />
           <Typography
@@ -45,7 +45,7 @@ const Footer = () => {
             fontSize: { lg: '16px', xs: '14px' },
           }}
         >
-          Transform your body. Build your strength. Stay consistent 💪
+          Transform your body. Build your strength. Stay consistent
         </Typography>
 
         {/* NAV LINKS */}
@@ -57,9 +57,15 @@ const Footer = () => {
 
         {/* SOCIAL ICONS */}
         <Stack direction="row" gap="20px">
-          <a href="#" style={iconStyle}><FaInstagram /></a>
-          <a href="#" style={iconStyle}><FaGithub /></a>
-          <a href="#" style={iconStyle}><FaLinkedin /></a>
+          <a href="https://instagram.com" target="_blank" rel="noreferrer" style={iconStyle}>
+            <FaInstagram />
+          </a>
+          <a href="https://github.com" target="_blank" rel="noreferrer" style={iconStyle}>
+            <FaGithub />
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noreferrer" style={iconStyle}>
+            <FaLinkedin />
+          </a>
         </Stack>
       </Stack>
 
@@ -86,34 +92,28 @@ const Footer = () => {
   );
 };
 
-/*  LINK STYLE */
+/* LINK STYLE */
 const linkStyle = {
   color: '#fff',
   textDecoration: 'none',
   fontSize: '15px',
-  position: 'relative',
   transition: '0.3s',
 };
 
+/* ICON STYLE */
 const iconStyle = {
   color: '#fff',
   fontSize: '20px',
   transition: '0.3s',
 };
 
-/*  HOVER EFFECTS */
-document.addEventListener('mouseover', (e) => {
-  if (e.target.tagName === 'A') {
-    e.target.style.color = '#FF2625';
-    e.target.style.transform = 'scale(1.1)';
+/* HOVER via CSS (React-safe) */
+const styleSheet = document.styleSheets[0];
+styleSheet.insertRule(`
+  a:hover {
+    color: #FF2625 !important;
+    transform: scale(1.1);
   }
-});
-
-document.addEventListener('mouseout', (e) => {
-  if (e.target.tagName === 'A') {
-    e.target.style.color = '#fff';
-    e.target.style.transform = 'scale(1)';
-  }
-});
+`, styleSheet.cssRules.length);
 
 export default Footer;
