@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Stack, Typography, Button } from '@mui/material';
+import toast from "react-hot-toast";
 
 import Logo from '../assets/images/Logo.png';
 
@@ -10,10 +11,18 @@ const Navbar = () => {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
+  //  FINAL LOGOUT (with notification + delay)
   const handleLogout = () => {
     localStorage.removeItem("user");
-    navigate("/login");
-    window.location.reload(); // refresh navbar state
+    localStorage.removeItem("token");
+
+    toast.success("Logged out successfully"); // notification
+
+    // small delay so user can see toast
+    setTimeout(() => {
+      navigate("/");
+      window.location.reload(); // keeps navbar updated
+    }, 800);
   };
 
   const linkStyle = (path) => ({
@@ -43,7 +52,11 @@ const Navbar = () => {
       {/* Logo */}
       <Stack direction="row" alignItems="center" gap="10px">
         <img src={Logo} alt="logo" style={{ width: '40px', height: '40px' }} />
-        <Typography fontSize={{ xs: '16px', md: '20px' }} fontWeight="bold" sx={{ color: '#fff' }}>
+        <Typography
+          fontSize={{ xs: '16px', md: '20px' }}
+          fontWeight="bold"
+          sx={{ color: '#fff' }}
+        >
           FitFusion
         </Typography>
       </Stack>
@@ -57,10 +70,7 @@ const Navbar = () => {
       >
         <Link to="/" style={linkStyle('/')}>Home</Link>
 
-        <a
-          href="#exercises"
-          style={{ color: '#fff', textDecoration: 'none' }}
-        >
+        <a href="#exercises" style={{ color: '#fff', textDecoration: 'none' }}>
           Exercises
         </a>
 
@@ -68,7 +78,7 @@ const Navbar = () => {
           Favorites
         </Link>
 
-        {/*  AUTH SECTION */}
+        {/* AUTH SECTION */}
         {!user ? (
           <>
             <Link to="/login" style={{ color: '#fff' }}>Login</Link>

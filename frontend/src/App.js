@@ -21,11 +21,14 @@ import Register from './pages/Register';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
-// Protected Route
+
+//  Safer Protected Route (uses token)
 const PrivateRoute = ({ children }) => {
-  const user = JSON.parse(localStorage.getItem("user") || "null");
-  return user ? children : <Navigate to="/login" replace />;
+  const token = localStorage.getItem("token");
+
+  return token ? children : <Navigate to="/login" replace />;
 };
+
 
 // Layout Wrapper
 const AppContent = () => {
@@ -37,6 +40,7 @@ const AppContent = () => {
 
   return (
     <>
+      {/* Toast Notifications */}
       <Toaster position="top-right" />
 
       <Box
@@ -44,12 +48,15 @@ const AppContent = () => {
         sx={{ width: { xl: '1488px' } }}
         m="auto"
       >
+        {/* Navbar */}
         {!hideLayout && <Navbar />}
 
+        {/* Routes */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/exercise/:id" element={<ExerciseDetails />} />
 
+          {/* Protected Route */}
           <Route
             path="/favorites"
             element={
@@ -63,13 +70,15 @@ const AppContent = () => {
           <Route path="/register" element={<Register />} />
         </Routes>
 
+        {/* Footer */}
         {!hideLayout && <Footer />}
       </Box>
     </>
   );
 };
 
-// 🚀 NO Router here
+
+// Main App (Router is already in index.js)
 const App = () => <AppContent />;
 
 export default App;
